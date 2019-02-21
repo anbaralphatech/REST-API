@@ -5,7 +5,7 @@ import json, logging, sys
 from logging.handlers import RotatingFileHandler
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from blueprint_challenge import app, manager
+from blueprints import app, manager
 
 
 if __name__=='__main__':

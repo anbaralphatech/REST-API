@@ -1,6 +1,6 @@
 from flask_restful import fields
 import random, logging
-from blueprint_challenge import db
+from blueprints import db
 
 class Getjob(db.Model):
 

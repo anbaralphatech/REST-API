@@ -5,7 +5,7 @@ from . import *
 import logging, json
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt_claims
                                 # get token          identity
-from blueprint_challenge.client import *
+# from blueprints.client import *
 import requests
 
 bp_getjob = Blueprint('getjob',__name__)
