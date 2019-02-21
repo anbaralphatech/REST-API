@@ -11,7 +11,7 @@ from blueprints import app, manager
 if __name__=='__main__':
 
     formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-    log_handler = RotatingFileHandler("%s/%s" % (app.root_path, 'storage/log/app.log'), maxBytes=10000, backupCount=10)
+    log_handler = RotatingFileHandler("%s/%s" % (app.root_path, 'storage/log/app.log'), maxBytes=1000000, backupCount=10)
     log_handler.setLevel(logging.INFO)
     log_handler.setFormatter(formatter)
     app.logger.addHandler(log_handler)
