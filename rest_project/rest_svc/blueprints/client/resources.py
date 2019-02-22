@@ -9,7 +9,7 @@ api = Api(bp_client)
 
 class ClientResource(Resource):
 
-    # @jwt_required
+    @jwt_required
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('client_key', location='json', required=True)
@@ -22,7 +22,7 @@ class ClientResource(Resource):
         db.session.commit()
         return marshal(client, Client_input.response_field)
         
-    # @jwt_required
+    @jwt_required
     def get(self, id=None):
         if id == None:
             parser = reqparse.RequestParser()
@@ -54,7 +54,7 @@ class ClientResource(Resource):
                 return marshal(qry, Client_input.response_field), 200, {'Content-Type':'application/json'}
             return {'status' : 'NOT_FOUND'}, 404, {'Content-Type':'application/json'}
 
-    # @jwt_required
+    @jwt_required
     def put(self, id=None):
         parser = reqparse.RequestParser()
         parser.add_argument('client_key', location='json', required=True)
@@ -70,7 +70,7 @@ class ClientResource(Resource):
         db.session.commit()
         return marshal(qry, Client_input.response_field), 200, {'Content-Type':'application/json'}
 
-    # @jwt_required
+    @jwt_required
     def delete(self, id=None):
         qry = Client_input.query.get(id)
         if qry is not None:

@@ -51,30 +51,38 @@ class GetJob (Resource):
 
 
     def get (self,id=None):
-        parser = reqparse.RequestParser()
-        parser.add_argument('description', location='args', default=None)
-        parser.add_argument('page', location='args', default=0)
-        args = parser.parse_args()
+        if id == None:
+            parser = reqparse.RequestParser()
+            parser.add_argument('description', location='args', default=None)
+            parser.add_argument('page', location='args', default=0)
+            args = parser.parse_args()
 
 
-        list_job=[]
+            list_job=[]
 
-        for i in range(1, 8): 
-            rq = requests.get(self.wio_host , params={'description': args['description'],'page': i})
-            job = rq.json()
+            for i in range(1, 8): 
+                rq = requests.get(self.wio_host , params={'description': args['description'],'page': i})
+                job = rq.json()
 
-            for data in job:
-                description=self.search(data["description"])
-                # print(description)
-                
-                ambil = Getjob(None,data['type'],data['location'],description, data['company_url'])
-                db.session.add(ambil)
-                db.session.commit()
-                get = marshal(ambil, Getjob.response_field)                    
-                list_job.append(get)
-        return list_job
+                for data in job:
+                    description=self.search(data["description"])
+                    # print(description)
+                    
+                    ambil = Getjob(None,data['type'],data['location'],description, data['company_url'])
+                    db.session.add(ambil)
+                    db.session.commit()
+                    get = marshal(ambil, Getjob.response_field)                    
+                    list_job.append(get)
+            return list_job
+
+        else:
+            qry = Getjob.query.get(id)
+            if qry is not None:
+                # unnecessary response field dapat disolve dengan menggunakan marshal (flask-restful)
+                return marshal(qry, Getjob.response_field), 200, {'Content-Type':'application/json'}
+            return {'status' : 'NOT_FOUND'}, 404, {'Content-Type':'application/json'}
            
             
 
          
-api.add_resource(GetJob, '')
+api.add_resource(GetJob,'','/<int:id>')
