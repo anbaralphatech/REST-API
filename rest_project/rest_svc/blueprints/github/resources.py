@@ -4,7 +4,6 @@ from flask_restful import Resource, Api, reqparse, marshal
 from . import *
 from blueprints import db
 import logging, json
-from blueprints.client import Client_input
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt_claims
 
 bp_github = Blueprint('bp_github', __name__)

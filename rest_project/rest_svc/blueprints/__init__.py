@@ -12,10 +12,8 @@ from datetime import timedelta
 
 app=Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/rest_training'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/db_github_mrr'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 ### JWT ###
 app.config['JWT_SECRET_KEY'] = '1234'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
@@ -25,7 +23,6 @@ jwt = JWTManager(app)
 @jwt.user_claims_loader
 def add_claims_to_access_token(identity):
     return identity
-
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
@@ -50,12 +47,18 @@ def after_request(response):
 
 # -----CALL BLUEPRINT
 
-
 from blueprints.get_job.resources import bp_getjob
-
-
+from blueprints.github.resources import bp_github
+from blueprints.loc.resources import bp_loc
+from blueprints.result.resources import bp_result
+from blueprints.client.resources import bp_client
+from blueprints.auth import bp_auth
 
 app.register_blueprint(bp_getjob,url_prefix='/getjob')
-
+app.register_blueprint(bp_github)
+app.register_blueprint(bp_loc,url_prefix='/getloc')
+app.register_blueprint(bp_result,url_prefix='/getresult')
+app.register_blueprint(bp_client)
+app.register_blueprint(bp_auth)
 
 db.create_all()

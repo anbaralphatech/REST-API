@@ -12,7 +12,6 @@ api = Api(bp_loc)
 class PublicGetCurrentLoc(Resource):
     wio_host = "http://dev.farizdotid.com/api/instansi/semuainstansi"
     
-    # @jwt_required
     def get(self):
         rq = requests.get(self.wio_host)
         current = rq.json()

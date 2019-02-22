@@ -4,7 +4,7 @@ from flask_restful import fields
 
 class Locs(db.Model):
 
-    __tablename__ = "weather"
+    __tablename__ = "location"
     loc_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nama_kabupaten = db.Column(db.String(100))
     jenis_instansi = db.Column(db.String(100))
